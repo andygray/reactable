@@ -1,0 +1,19 @@
+{
+  "name": "golftable",
+  "version": "1.0.0",
+  "description": "reactive socket i/o driven table",
+  "main": "app.js",
+  "scripts": {
+    "test": "mocha test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SteFletcher/golftable.git"
+  },
+  "author": "stephen fletcher",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SteFletcher/golftable/issues"
+  },
+  "homepage": "https://github.com/SteFletcher/golftable#readme"
+}
