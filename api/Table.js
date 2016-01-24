@@ -2,10 +2,6 @@ var tableRoutes = function (app, Competition) {
 
     var _ = require('lodash');
 
-    var errorFunc = function (error) {
-        console.log('ERROR: ' + error);
-    };
-
     app.get('/table/:competitionId', function (req, res) {
         console.log('GET /table/' + req.params.competitionId);
 
@@ -22,7 +18,10 @@ var tableRoutes = function (app, Competition) {
 
                 res.send(_.orderBy(tempTable, ['score'], ['asc']));
 
-            }, errorFunc);
+            }, function (error) {
+                console.log('Ooops: ' + error);
+                res.status(500).send('Ooops: Unable to retrieve data!');
+            });
 
     });
 };
