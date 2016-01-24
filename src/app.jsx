@@ -9,6 +9,6 @@ ReactDOM.render(
         col1heading="Tee"
         col2heading="Player"
         col3heading="Score/Par"
-        urlForData="./js/tabledata.json">
+        source="./js/tabledata.json">
     </ReactTable>
     , document.getElementById('react-container'));

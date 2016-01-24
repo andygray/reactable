@@ -5,8 +5,8 @@
   "main": "app.js",
   "scripts": {
     "test": "mocha test",
-    "build": "browserify -t [ babelify --presets [ react ] ] ./public/app.jsx -o ./site/js/bundle.js -d",
-    "watch": "watchify -t [ babelify --presets [ react ] ] ./public/app.jsx -o ./site/js/bundle.js -d"
+    "build": "browserify -t [ babelify --presets [ react ] ] ./src/app.jsx -o ./public/js/bundle.js -d",
+    "watch": "watchify -t [ babelify --presets [ react ] ] ./src/app.jsx -o ./public/js/bundle.js -d"
   },
   "repository": {
     "type": "git",

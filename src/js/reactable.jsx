@@ -16,6 +16,17 @@ var Table = React.createClass({
                 return {data: data};
             });
     },
+    componentDidMount: function() {
+        $.getJSON(url,function(result) {
+            var lastGist = result[0];
+            if (this.isMounted()) {
+                this.setState({
+                    username: lastGist.owner.login,
+                    lastGistUrl: lastGist.html_url
+                });
+            }
+        }).bind(this);
+    },
     render: function () {
         return (
 
@@ -30,8 +41,9 @@ var Table = React.createClass({
                     </tr>
                     </thead>
                     <tbody>
+
                     <tr>
-                        <td>{this.props.data.tabledata[0].tee}</td>
+                        <td></td>
                         <td></td>
                         <td></td>
                     </tr>
