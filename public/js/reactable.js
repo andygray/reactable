@@ -1,3 +1,5 @@
+var React = require('react');
+var ReactDOM = require('react-dom');
 /* This table
     - should pull data from the server when it initially loads
     - should have a secondary click function that reveals more info
@@ -6,7 +8,8 @@
 */
 var Table = React.createClass({
     getInitialState: function(){
-        // call server for data
+        // call server for data (currently using flat-file: ./tabledata.json)
+
     },
     render: function () {
         return (

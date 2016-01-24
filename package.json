@@ -4,7 +4,8 @@
   "description": "reactive socket i/o driven table",
   "main": "app.js",
   "scripts": {
-    "test": "mocha test"
+    "test": "mocha test",
+    "build": "browserify -t [ babelify --presets [ react ] ] ./public/js/* -o ./site/js/bundle.js"
   },
   "repository": {
     "type": "git",
@@ -23,6 +24,9 @@
     "react-dom": "^0.14.6"
   },
   "devDependencies": {
-    "babel-cli": "^6.4.5"
+    "babel-cli": "^6.4.5",
+    "browserify": "^13.0.0",
+    "reactify": "^1.1.1",
+    "watchify": "^3.7.0"
   }
 }
