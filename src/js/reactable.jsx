@@ -23,7 +23,7 @@ var Table = React.createClass({
                 var rowList = _.map(result, function (row, index) {
                     return <TableRow
                         key={index}
-                        cell1={index}
+                        cell1={index + 1}
                         cell2={row.player}
                         cell3={row.score}
                     />

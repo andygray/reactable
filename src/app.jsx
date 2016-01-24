@@ -8,7 +8,7 @@ ReactDOM.render(
         col1heading="Position"
         col2heading="Player"
         col3heading="Score"
-        source="http://localhost:8080/table/56a52965d4c622243710639e">
+        source="/table/56a52965d4c622243710639e">
     </ReactTable>,
     document.getElementById('react-container')
 );
