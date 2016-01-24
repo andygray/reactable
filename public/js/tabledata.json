@@ -1,8 +1,8 @@
-{ tabledata: [
-  {tee: "t1", player: "player1", par: "2"},
-  {tee: "t5", player: "player2", par: "-1"},
-  {tee: "t3", player: "player3", par: "-2"},
-  {tee: "t4", player: "player4", par: "-7"},
-  {tee: "t3", player: "player5", par: "-4"},
-  {tee: "t6", player: "player6", par: "0"}
+{ "tabledata": [
+  {"tee": "t1", "player": "player1", "par": "2"},
+  {"tee": "t5", "player": "player2", "par": "-1"},
+  {"tee": "t3", "player": "player3", "par": "-2"},
+  {"tee": "t4", "player": "player4", "par": "-7"},
+  {"tee": "t3", "player": "player5", "par": "-4"},
+  {"tee": "t6", "player": "player6", "par": "0"}
 ]}
