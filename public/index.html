@@ -12,16 +12,20 @@
 <script type="text/jsx">
     var HelloComponent = React.createClass({
         render: function () {
-            return (<div>Hello React Component</div>);
+            return <div>
+                <h1>{this.props.text}</h1>
+                <p>{this.props.children}</p>
+                </div>;
         }
     });
 
     React.render(
-            <div><HelloComponent />
-                <HelloComponent />
-                <HelloComponent />
-                </div>
-                , document.getElementById('react-container'));
+            <div>
+                <HelloComponent text="hello component 1">this is hello component 1 body</HelloComponent>
+                <HelloComponent text="this is a property">and so on...</HelloComponent>
+                <HelloComponent text="another react component!">ok, i get it..</HelloComponent>
+            </div>
+            , document.getElementById('react-container'));
 </script>
 </body>
 </html>
