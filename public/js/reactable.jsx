@@ -2,22 +2,25 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 var jQuert, $ = require('jquery');
 /* This table
-    - should pull data from the server when it initially loads
-    - should have a secondary click function that reveals more info
-        (by means of displaying a new row as a child with data, possibly with :firstChild or :after)
+ - should pull data from the server when it initially loads
+ - should have a secondary click function that reveals more info
+ (by means of displaying a new row as a child with data, possibly with :firstChild or :after)
 
-*/
+ */
 var Table = React.createClass({
-    getInitialState: function(){
+    getInitialState: function () {
         // call server for data (currently using flat-file: ./tabledata.json)
-
+        var url = this.props.urlForData;
+        return $.getJSON(url)
+            .then(function (data) {
+                return {data: data};
+            });
     },
     render: function () {
         return (
 
             <div>
                 <h1>{this.props.text}</h1>
-                <p>{this.props.children}</p>
                 <table>
                     <thead>
                     <tr>
@@ -28,7 +31,7 @@ var Table = React.createClass({
                     </thead>
                     <tbody>
                     <tr>
-                        <td></td>
+                        <td>{this.props.data.tabledata[0].tee}</td>
                         <td></td>
                         <td></td>
                     </tr>
@@ -40,12 +43,3 @@ var Table = React.createClass({
 });
 
 module.exports = Table;
-
-ReactDOM.render(
-    <div>
-        <Table text="League Table"
-               col1heading="Position"
-               col2heading="Player"
-               col3heading="Points">This is the League Table</Table>
-    </div>
-    , document.getElementById('react-container'));
