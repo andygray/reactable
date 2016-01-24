@@ -1,4 +1,13 @@
+/* This table
+    - should pull data from the server when it initially loads
+    - should have a secondary click function that reveals more info
+        (by means of displaying a new row as a child with data, possibly with :firstChild or :after)
+
+*/
 var Table = React.createClass({
+    getInitialState: function(){
+        // call server for data
+    },
     render: function () {
         return (
 
