@@ -1,5 +1,6 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
+var jQuert, $ = require('jquery');
 /* This table
     - should pull data from the server when it initially loads
     - should have a secondary click function that reveals more info
@@ -37,6 +38,8 @@ var Table = React.createClass({
         );
     }
 });
+
+module.exports = Table;
 
 ReactDOM.render(
     <div>
