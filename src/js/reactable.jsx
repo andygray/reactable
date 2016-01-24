@@ -22,7 +22,8 @@ var Table = React.createClass({
                 for(i in result.tabledata){
                     var cell = result.tabledata[i];
                     // each of these should actually be another React component... lazy!
-                    rowList.push(<TableRow cell1={cell.tee}
+                    rowList.push(<TableRow key={i}
+                                            cell1={cell.tee}
                                             cell2={cell.player}
                                             cell3={cell.par}/>)
                 }
