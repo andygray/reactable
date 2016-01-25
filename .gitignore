@@ -2,3 +2,4 @@ node_modules
 .idea/*
 reactable.iml
 npm-debug.log
+./public/js/bundle.js
