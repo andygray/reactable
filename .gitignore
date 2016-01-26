@@ -1,5 +1,9 @@
 node_modules
 .idea/*
+<<<<<<< Updated upstream
 reactable.iml
 npm-debug.log
+=======
+>>>>>>> Stashed changes
 ./public/js/bundle.js
+startApp.sh

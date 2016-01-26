@@ -2,7 +2,6 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 var jQuert, $ = require('jquery');
 var TableRow = require('./tablerow.jsx');
-var _ = require('lodash');
 
 /* This table
  - should pull data from the server when it initially loads
@@ -20,7 +19,7 @@ var Table = React.createClass({
         $.getJSON(this.props.source, function (result) {
             if (this.isMounted()) {
 
-                var rowList = _.map(result, function (row, index) {
+                var rowList = result.map(function (row, index) {
                     return <TableRow
                         key={index}
                         cell1={index + 1}
