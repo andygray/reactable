@@ -1,18 +1,12 @@
 var React = require('react');
-var TableCell = require('./tablecell.jsx');
+var ReactDOM = require('react-dom');
 
-var TableRow = React.createClass({
-
-    propTypes: {
-        cells: React.PropTypes.array.isRequired
-    },
-
+var TableCell = React.createClass({
     getInitialState: function () {
         return {
-            cells: []
-        };
+            cell: ""
+        }
     },
-
     componentDidMount: function () {
 
         if (this.isMounted()) {
@@ -20,17 +14,14 @@ var TableRow = React.createClass({
                 return <TableCell celldata={item}/>
             });
 
-            this.setState({cells: cellList});
+            this.setState({cell: "blah"});
         }
     },
-
     render: function () {
         return (
-            <tr>
-                {this.state.cells}
-            </tr>
+                <td>{this.props.celldata}</td>
         );
     }
 });
 
-module.exports = TableRow;
+module.exports = TableCell;

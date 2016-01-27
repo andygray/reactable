@@ -1,8 +1,6 @@
 var React = require('react');
-var ReactDOM = require('react-dom');
-var jQuert, $ = require('jquery');
 var TableRow = require('./tablerow.jsx');
-
+var $ = require('jquery');
 /* This table
  - should pull data from the server when it initially loads
  - should have a secondary click function that reveals more info
@@ -22,9 +20,7 @@ var Table = React.createClass({
                 var rowList = result.map(function (row, index) {
                     return <TableRow
                         key={index}
-                        cell1={index + 1}
-                        cell2={row.player}
-                        cell3={row.score}
+                        cells={[(index + 1), row.player, row.score]}
                     />
                 });
 
