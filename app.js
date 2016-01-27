@@ -1,7 +1,9 @@
 var mongoose = require('mongoose');
 var express = require('express');
+var bodyParser = require('body-parser')
 
 var app = express();
+app.use(bodyParser.json());
 
 var api_path = __dirname + '/api';
 var models_path = __dirname + '/models';
@@ -29,11 +31,12 @@ var options = {
 mongoose.connect(dbURI, options);
 var conn = mongoose.connection;
 
-// set up mongoose schema
+// set up mongoose schemas
 var competitionModel = require(models_path + '/' + 'Competition.js');
+var pickModel = require(models_path + '/' + 'Pick.js');
 var tableApi = require(api_path + '/' + 'Table.js');
 
-tableApi(app, competitionModel(mongoose));
+tableApi(app, competitionModel(mongoose), pickModel(mongoose));
 
 conn.on('error', console.error.bind(console, 'connection error:'));
 
