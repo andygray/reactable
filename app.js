@@ -6,6 +6,7 @@ var app = express();
 var api_path = __dirname + '/api';
 var models_path = __dirname + '/models';
 
+app.use(express.static(__dirname + '/node_modules/bootstrap/dist'));
 app.use(express.static(__dirname + '/public'));
 
 if (!process.env.MONGOLABURI) {

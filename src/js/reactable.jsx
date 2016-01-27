@@ -36,8 +36,8 @@ var Table = React.createClass({
         return (
             <div>
                 <h1>{this.props.text}</h1>
-                <table>
-                    <thead>
+                <table className="table table-striped">
+                    <thead className="thead-inverse">
                         <tr>
                             <th>{this.props.col1heading}</th>
                             <th>{this.props.col2heading}</th>
