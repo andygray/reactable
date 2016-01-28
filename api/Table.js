@@ -6,7 +6,7 @@ var tableRoutes = function (app, Competition, Pick) {
         console.log('GET /table/' + req.params.competitionId);
 
         Competition
-            .findOne({_id: req.params.competitionId})
+            .findOne({'_id': req.params.competitionId})
             .exec()
             .then(function (comp) {
                 var tempTable = _.map(comp.selections, function (selection) {
@@ -29,12 +29,15 @@ var tableRoutes = function (app, Competition, Pick) {
         console.log('PUT /table/push/' + req.params.competitionId + ' BODY: ' + JSON.stringify(req.body));
 
         Competition
-            .findByIdAndUpdate(req.params.competitionId,
-            {$push: {'selections': {selection: req.body.selectionId, score: 99}}})
+            .findByIdAndUpdate(
+            {'_id': req.params.competitionId, 'selections.selection': req.body.selectionId},
+            {
+                'updated': Number((new Date().getTime() / 1000).toFixed(0)),
+                '$push': {'selections.$.score': 33 }
+            },
+            {new: true})
             .exec()
             .then(function (game) {
-                console.log(game);
-
                 res.send(game);
             }, function (error) {
                 console.log('Ooops: ' + error);
