@@ -49,10 +49,15 @@ var Table = React.createClass({
 
         this.socket = io('http://localhost:8080');
         this.socket.on('connect', this.connect);
+        this.socket.on('connect_err', this.disconnect);
     },
 
     connect() {
         this.setState({status: 'connected'})
+    },
+
+    disconnect() {
+        this.setState({status: 'disconnected'})
     },
 
     render() {
