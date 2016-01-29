@@ -17,7 +17,7 @@ var TableRow = React.createClass({
 
         if (this.isMounted()) {
             var cellList = this.props.cells.map(function (item, index) {
-                return <TableCell celldata={item}/>
+                return <TableCell celldata={item} key={index}/>
             });
 
             this.setState({cells: cellList});

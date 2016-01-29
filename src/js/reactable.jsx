@@ -10,7 +10,8 @@ var $ = require('jquery');
 var Table = React.createClass({
     getInitialState: function () {
         return {
-            rows: []
+            rows: [],
+            headers: []
         };
     },
     componentDidMount: function () {
@@ -24,7 +25,16 @@ var Table = React.createClass({
                     />
                 });
 
+                var columnHeaders =
+                    this.props.columnHeadings
+                        .map(function (header, index) {
+                            return ( <th key={index}>
+                                {header}
+                            </th>)
+                        });
+
                 this.setState({rows: rowList});
+                this.setState({headers: columnHeaders});
             }
         }.bind(this));
     },
@@ -34,14 +44,12 @@ var Table = React.createClass({
                 <h1>{this.props.text}</h1>
                 <table className="table table-striped">
                     <thead className="thead-inverse">
-                        <tr>
-                            <th>{this.props.col1heading}</th>
-                            <th>{this.props.col2heading}</th>
-                            <th>{this.props.col3heading}</th>
-                        </tr>
+                    <tr>
+                        {this.state.headers}
+                    </tr>
                     </thead>
                     <tbody>
-                        {this.state.rows}
+                    {this.state.rows}
                     </tbody>
                 </table>
             </div>
