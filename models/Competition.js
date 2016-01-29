@@ -7,8 +7,8 @@ var Competition = function (mongoose) {
             ref: 'Game'
         },
         description: String,
-        image: String,
-        order: Boolean,
+        image: {type: String, default: ""},
+        order: {type: Boolean, default: true},
         shortName: String,
         status: {type: String, default: "open"},
         selections: [{
@@ -19,10 +19,10 @@ var Competition = function (mongoose) {
             score: {type: Number, default: 0},
             handicap: {type: Number, default: 0},
             multiplier: {type: Number, default: 1},
-            potIndex: Number
+            potIndex: {type: Number, default: 0}
         }],
-        start: Number,
-        updated: Number
+        start: {type: Number, default: 0},
+        updated: {type: Number, default: 0}
     });
 
 
