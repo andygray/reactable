@@ -43,8 +43,14 @@ conn.on('error', console.error.bind(console, 'connection error:'));
 
 var port = process.env.PORT || 8080;
 conn.once('open', function() {
-    app.listen(port);
+    var server = app.listen(port);
     console.log('localhost running on ' + port);
+
+    var io = require('socket.io').listen(server);
+
+    io.sockets.on('connection', function(socket){
+        console.log('Connected: %s', socket.id);
+    });
 });
 
 

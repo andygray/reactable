@@ -1,20 +1,27 @@
 var React = require('react');
 var TableRow = require('./tablerow.jsx');
 var $ = require('jquery');
+
+var io = require('socket.io-client');
+
+var StatusBar = require('./statusbar.jsx');
+
 /* This table
- - should pull data from the server when it initially loads
- - should have a secondary click function that reveals more info
+ - takes a list of columns as properties
+ -
  (by means of displaying a new row as a child with data, possibly with :firstChild or :after)
 
  */
 var Table = React.createClass({
-    getInitialState: function () {
+    getInitialState() {
         return {
             rows: [],
-            headers: []
+            headers: [],
+            status: 'disconnected'
         };
     },
-    componentDidMount: function () {
+
+    componentWillMount() {
         $.getJSON(this.props.source, function (result) {
             if (this.isMounted()) {
 
@@ -35,10 +42,20 @@ var Table = React.createClass({
 
                 this.setState({rows: rowList});
                 this.setState({headers: columnHeaders});
+
             }
         }.bind(this));
+
+
+        this.socket = io('http://localhost:8080');
+        this.socket.on('connect', this.connect);
     },
-    render: function () {
+
+    connect() {
+        this.setState({status: 'connected'})
+    },
+
+    render() {
         return (
             <div>
                 <h1>{this.props.text}</h1>
@@ -52,6 +69,9 @@ var Table = React.createClass({
                     {this.state.rows}
                     </tbody>
                 </table>
+                <StatusBar
+                    status={this.state.status}>
+                </StatusBar>
             </div>
         );
     }
