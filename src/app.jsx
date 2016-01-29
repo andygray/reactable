@@ -1,6 +1,8 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
-var ReactTable = require('./js/reactable.jsx')
+var ReactTable = require('./js/reactable.jsx');
+
+
 
 ReactDOM.render(
     <ReactTable
