@@ -20,9 +20,11 @@ var Table = React.createClass({
         };
     },
 
-    componentWillMount() {
+    getTable: function() {
         $.getJSON(this.props.source, function (result) {
             if (this.isMounted()) {
+
+                console.log(result[0]);
 
                 var rowList = result.map(function (row, index) {
                     return <TableRow
@@ -32,12 +34,19 @@ var Table = React.createClass({
                 });
                 var columnHeaders = this.popHeaders(result);
 
-                this.setState({rows: rowList});
+                this.setState({rows: rowList}, function () {
+                    console.log('updated');
+                });
                 this.setState({headers: columnHeaders});
 
+                console.log(this.state.rows);
             }
         }.bind(this));
+    },
 
+    componentWillMount() {
+
+        setInterval(this.getTable, 5000);
 
         this.socket = io('http://localhost:8080');
         this.socket.on('connect', this.connect);
