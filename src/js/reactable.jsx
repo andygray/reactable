@@ -16,7 +16,6 @@ var Table = React.createClass({
     getInitialState() {
         return {
             rows: [],
-            headers: [],
             status: 'disconnected'
         };
     },
@@ -31,14 +30,7 @@ var Table = React.createClass({
                         cells={[(index + 1), row.player, row.score]}
                     />
                 });
-
-                var columnHeaders =
-                    this.props.columnHeadings
-                        .map(function (header, index) {
-                            return ( <th key={index}>
-                                {header}
-                            </th>)
-                        });
+                var columnHeaders = this.popHeaders(result);
 
                 this.setState({rows: rowList});
                 this.setState({headers: columnHeaders});
@@ -50,6 +42,26 @@ var Table = React.createClass({
         this.socket = io('http://localhost:8080');
         this.socket.on('connect', this.connect);
         this.socket.on('connect_err', this.disconnect);
+    },
+
+    popHeaders(result) {
+        var columnHeaders;
+        var toSetAsHeaders = this.props.headers;
+
+        // check if we have headers, if we don't then use the names given to the data fields
+        if (!this.props.headers) {
+            toSetAsHeaders = Object.keys(result[0]);
+            toSetAsHeaders.unshift("Position");
+        }
+
+        columnHeaders = toSetAsHeaders.map(function (header, index) {
+            return ( <th key={index + 1}>
+                {header.charAt(0).toUpperCase() + header.slice(1)}
+            </th>)
+        });
+
+
+        return columnHeaders;
     },
 
     connect() {
