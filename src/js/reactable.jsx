@@ -48,12 +48,12 @@ var Table = React.createClass({
         var columnHeaders;
         var toSetAsHeaders = this.props.headers;
 
+        // check if we have headers, if we don't then use the names given to the data fields
         if (!this.props.headers) {
             toSetAsHeaders = Object.keys(result[0]);
             toSetAsHeaders.unshift("Position");
         }
 
-        // check if we have headers, if we don't then use the names given to the data fields
         columnHeaders = toSetAsHeaders.map(function (header, index) {
             return ( <th key={index + 1}>
                 {header.charAt(0).toUpperCase() + header.slice(1)}
