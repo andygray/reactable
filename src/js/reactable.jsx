@@ -1,7 +1,8 @@
+'use strict'
 var React = require('react');
 var TableRow = require('./tablerow.jsx');
 var $ = require('jquery');
-
+var moment = require('moment');
 var io = require('socket.io-client');
 
 var StatusBar = require('./statusbar.jsx');
@@ -14,10 +15,16 @@ var StatusBar = require('./statusbar.jsx');
  */
 var Table = React.createClass({
     getInitialState() {
+        var initialLoadTime = (new Date()).getTime();
         return {
             rows: [],
-            status: 'disconnected'
+            status: 'disconnected',
+            lastUpdated: initialLoadTime
         };
+    },
+
+    shouldComponentUpdate: function(nextProps, nextState) {
+        return true;
     },
 
     getTable: function() {
@@ -39,15 +46,24 @@ var Table = React.createClass({
                 });
                 this.setState({headers: columnHeaders});
 
-                console.log(this.state.rows);
+                //console.log(this.state.rows);
+                this.setUpdateStatus();
             }
         }.bind(this));
+    },
+
+    setUpdateStatus() {
+        let now = (new Date()).getTime();
+        let newLastUpdated = now - this.state.lastUpdated;
+        let lastUpdated = moment.duration(newLastUpdated);
+        this.setState({lastUpdated: now});
+        this.setState({status: lastUpdated.humanize()});
     },
 
     componentWillMount() {
 
         setInterval(this.getTable, 5000);
-
+        this.getTable();
         this.socket = io('http://localhost:8080');
         this.socket.on('connect', this.connect);
         this.socket.on('connect_err', this.disconnect);
