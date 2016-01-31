@@ -4,6 +4,20 @@ var tableRoutes = function (app, Competition, Pick) {
 
     app.get('/table/:competitionId', function (req, res) {
         console.log('GET /table/' + req.params.competitionId);
+
+        var self = this;
+        Pick
+            .find({'competition': req.params.competitionId})
+            .populate('user')
+            .exec()
+            .then(function (picks) {
+
+                self.allPicks = picks;
+
+            }, function (error) {
+                console.log('Ooops: ' + error);
+                res.status(500).send('Ooops: Unable to retrieve data!');
+            });
         
         Competition
             .findOne({'_id': req.params.competitionId})
