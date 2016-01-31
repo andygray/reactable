@@ -5,7 +5,6 @@ var pickRoutes = function (app, Pick) {
     app.get('/picks/:competitionId', function (req, res) {
         console.log('GET /competition/' + req.params.competitionId);
 
-
         Pick
             .find({'competition': req.params.competitionId})
             .populate('user')
