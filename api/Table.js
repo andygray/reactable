@@ -18,7 +18,7 @@ var tableRoutes = function (app, Competition, Pick) {
                 console.log('Ooops: ' + error);
                 res.status(500).send('Ooops: Unable to retrieve data!');
             });
-        
+
         Competition
             .findOne({'_id': req.params.competitionId})
             .exec()
