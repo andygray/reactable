@@ -2,10 +2,8 @@ var Pick = function (mongoose) {
 
     var pickSchema = new mongoose.Schema({
         user: {
-            id: {
-                type: mongoose.Schema.Types.ObjectId,
-                ref: 'User'
-            }
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'User'
         },
         competition: {
             type: mongoose.Schema.Types.ObjectId,
