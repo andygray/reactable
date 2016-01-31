@@ -35,9 +35,19 @@ var conn = mongoose.connection;
 // set up mongoose schemas
 var competitionModel = require(models_path + '/' + 'Competition.js');
 var pickModel = require(models_path + '/' + 'Pick.js');
+var userModel = require(models_path + '/' + 'User.js');
+
+var competitionApi = require(api_path + '/' + 'Competition.js');
+var pickApi = require(api_path + '/' + 'Pick.js');
 var tableApi = require(api_path + '/' + 'Table.js');
 
-tableApi(app, competitionModel(mongoose), pickModel(mongoose));
+var competitionModel = competitionModel(mongoose);
+var pickModel = pickModel(mongoose);
+var userModel = userModel(mongoose);
+
+competitionApi(app, competitionModel);
+pickApi(app, pickModel);
+tableApi(app, competitionModel, pickModel);
 
 conn.on('error', console.error.bind(console, 'connection error:'));
 

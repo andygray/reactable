@@ -4,8 +4,7 @@ var tableRoutes = function (app, Competition, Pick) {
 
     app.get('/table/:competitionId', function (req, res) {
         console.log('GET /table/' + req.params.competitionId);
-
-
+        
         Competition
             .findOne({'_id': req.params.competitionId})
             .exec()
