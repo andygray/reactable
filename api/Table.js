@@ -7,6 +7,7 @@ var tableRoutes = function (app, Competition, Pick) {
 
         Competition
             .findOne({'_id': req.params.competitionId})
+            .lean()
             .exec()
             .then(function (comp) {
 
@@ -35,8 +36,10 @@ var tableRoutes = function (app, Competition, Pick) {
 
                         });
 
-                        //console.log(picks);
-                        res.send(_.orderBy(picks, ['total', 'userName'], ['asc']));
+                        // set table on comp
+                        comp.table = _.orderBy(picks, ['total', 'userName'], ['asc']);
+
+                        res.send(comp);
 
                     }, function (error) {
                         console.log('Ooops: ' + error);
