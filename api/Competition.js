@@ -9,9 +9,7 @@ var competitionRoutes = function (app, Competition) {
             .findOne({'_id': req.params.competitionId})
             .exec()
             .then(function (comp) {
-
                 res.send(comp);
-
             }, function (error) {
                 console.log('Ooops: ' + error);
                 res.status(500).send('Ooops: Unable to retrieve data!');

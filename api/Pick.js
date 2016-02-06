@@ -10,12 +10,10 @@ var pickRoutes = function (app, Pick) {
             .exec()
             .then(function (picks) {
                 res.send(picks);
-
             }, function (error) {
                 console.log('Ooops: ' + error);
                 res.status(500).send('Ooops: Unable to retrieve data!');
             });
-
     });
 };
 
