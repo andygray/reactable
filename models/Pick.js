@@ -5,6 +5,7 @@ var Pick = function (mongoose) {
             type: mongoose.Schema.Types.ObjectId,
             ref: 'User'
         },
+        userName: {type: String, default: ''},
         competition: {
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Competition'

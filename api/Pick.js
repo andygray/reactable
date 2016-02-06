@@ -7,10 +7,8 @@ var pickRoutes = function (app, Pick) {
 
         Pick
             .find({'competition': req.params.competitionId})
-            .populate('user')
             .exec()
             .then(function (picks) {
-
                 res.send(picks);
 
             }, function (error) {

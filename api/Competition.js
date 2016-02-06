@@ -5,7 +5,6 @@ var competitionRoutes = function (app, Competition) {
     app.get('/competition/:competitionId', function (req, res) {
         console.log('GET /competition/' + req.params.competitionId);
 
-
         Competition
             .findOne({'_id': req.params.competitionId})
             .exec()
