@@ -16,6 +16,7 @@ var Competition = function (mongoose) {
                 type: mongoose.Schema.Types.ObjectId,
                 ref: 'Selection'
             },
+            selectionName: {type: String, default: ''},
             score: {type: Number, default: 0},
             handicap: {type: Number, default: 0},
             multiplier: {type: Number, default: 1},

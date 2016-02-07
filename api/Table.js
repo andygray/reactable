@@ -5,37 +5,52 @@ var tableRoutes = function (app, Competition, Pick) {
     app.get('/table/:competitionId', function (req, res) {
         console.log('GET /table/' + req.params.competitionId);
 
-
         Competition
             .findOne({'_id': req.params.competitionId})
+            .lean()
             .exec()
             .then(function (comp) {
-                var tempTable = _.map(comp.selections, function (selection) {
-                    return {
-                        player: selection.selection,
-                        score: selection.score
-                    };
-                });
 
-                // adjust values randomly
-                tempTable = _.map(tempTable, function (row) {
-                    var x = Math.floor((Math.random() * 10) + 1);
-                    if (x < 3) {
-                        row.score = row.score + 1;
-                    }
-                    if (x > 3 && x < 7) {
-                        row.score = row.score - 1;
-                    }
+                Pick
+                    .find({'competition': req.params.competitionId})
+                    .lean()
+                    .exec()
+                    .then(function (picks) {
 
-                    return row;
-                });
+                        // can do better!
+                        var selectionsMap = {};
+                        _.forEach(comp.selections, function (s) {
+                            selectionsMap[s.selection] = s;
+                        }, selectionsMap);
 
-                res.send(_.orderBy(tempTable, ['score'], ['asc']));
+                        picks = _.map(picks, function (p) {
+                            p.selections = _.map(p.selections, function (s) {
+                                return selectionsMap[s.selection];
+                            });
+
+                            p.total = _.reduce(p.selections, function (sum, s) {
+                                return sum + (s.score || 0) + ((s.handicap || 0) * (s.multiplier || 1));
+                            }, 0);
+
+                            return p;
+
+                        });
+
+                        // set table on comp
+                        comp.table = _.orderBy(picks, ['total', 'userName'], ['asc']);
+
+                        res.send(comp);
+
+                    }, function (error) {
+                        console.log('Ooops: ' + error);
+                        res.status(500).send('Ooops: Unable to retrieve data!');
+                    });
 
             }, function (error) {
                 console.log('Ooops: ' + error);
                 res.status(500).send('Ooops: Unable to retrieve data!');
             });
+
 
     });
 
