@@ -4,6 +4,7 @@ var TableRow = require('./tablerow.jsx');
 var $ = require('jquery');
 var moment = require('moment');
 var io = require('socket.io-client');
+var _ = require('lodash');
 
 var StatusBar = require('./statusbar.jsx');
 
@@ -29,34 +30,31 @@ var Table = React.createClass({
 
     getTable: function() {
         $.getJSON(this.props.source, function (result) {
-            if (this.isMounted()) {
 
-                console.log(result[0]);
+            var rowList = result.table.map(function (row, index) {
+                // TODO: remove selections and position somewhere for dynamic disclosure?
+                row.selections = "somfink else";
+                var cellData = _.values(row);
+                return <TableRow
+                    key={index}
+                    cells={cellData}/>
+            });
+            var columnHeaders = this.popHeaders(result.table);
 
-                var rowList = result.map(function (row, index) {
-                    return <TableRow
-                        key={index}
-                        cells={[(index + 1), row.player, row.score]}
-                    />
-                });
-                var columnHeaders = this.popHeaders(result);
-
-                this.setState({rows: rowList}, function () {
-                    console.log('updated');
-                });
-                this.setState({headers: columnHeaders});
-
-                //console.log(this.state.rows);
-                this.setUpdateStatus();
-            }
+            this.setState({rows: rowList}, function () {
+                console.log('updated');
+            });
+            this.setState({headers: columnHeaders});
+            this.setState({lastUpdated: result.updated});
+            this.setUpdateStatus();
         }.bind(this));
     },
 
     setUpdateStatus() {
         let now = (new Date()).getTime();
         let newLastUpdated = now - this.state.lastUpdated;
-        let lastUpdated = moment.duration(newLastUpdated);
-        this.setState({lastUpdated: now});
+        let lastUpdated = moment.duration(this.state.lastUpdated);
+        this.setState({lastUpdated: this.state.lastUpdated});
         this.setState({status: lastUpdated.humanize()});
     },
 
@@ -76,7 +74,7 @@ var Table = React.createClass({
         // check if we have headers, if we don't then use the names given to the data fields
         if (!this.props.headers) {
             toSetAsHeaders = Object.keys(result[0]);
-            toSetAsHeaders.unshift("Position");
+            //toSetAsHeaders.unshift("Position");
         }
 
         columnHeaders = toSetAsHeaders.map(function (header, index) {

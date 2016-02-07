@@ -1,0 +1,7 @@
+./models/
+./node_modules/
+./public/
+./api/
+./.idea/
+app.js
+startApp.sh
