@@ -17,10 +17,8 @@ var Pick = function (mongoose) {
             required: true
         },
         selections: [{
-            selection: {
-                type: mongoose.Schema.Types.ObjectId,
-                ref: 'Selection'
-            }
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Selection'
         }]
     });
 
