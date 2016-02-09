@@ -3,12 +3,18 @@ var Pick = function (mongoose) {
     var pickSchema = new mongoose.Schema({
         user: {
             type: mongoose.Schema.Types.ObjectId,
-            ref: 'User'
+            ref: 'User',
+            required: true
         },
-        userName: {type: String, default: ''},
+        userName: {
+            type: String,
+            default: '',
+            required: true
+        },
         competition: {
             type: mongoose.Schema.Types.ObjectId,
-            ref: 'Competition'
+            ref: 'Competition',
+            required: true
         },
         selections: [{
             selection: {
