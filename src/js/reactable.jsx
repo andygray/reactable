@@ -46,6 +46,7 @@ var Table = React.createClass({
             });
             this.setState({headers: columnHeaders});
             this.setState({lastUpdated: result.updated});
+            this.setState({title: result.description});
             this.setUpdateStatus();
         }.bind(this));
     },
@@ -98,7 +99,7 @@ var Table = React.createClass({
     render() {
         return (
             <div>
-                <h1>{this.props.text}</h1>
+                <h1>{this.state.title}</h1>
                 <table className="table table-striped">
                     <thead className="thead-inverse">
                     <tr>

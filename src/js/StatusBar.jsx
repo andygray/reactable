@@ -20,7 +20,7 @@ var StatusBar = React.createClass({
     render() {
         return (
             <header>
-                <div className="row">Last updated: {this.props.status}</div>
+                <div className="">Last updated: {this.props.status}</div>
             </header>
         )
     }
