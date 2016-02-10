@@ -11,6 +11,11 @@ var tableRoutes = function (app, Competition, Pick) {
             .exec()
             .then(function (comp) {
 
+                // can do better!
+                var selectionsMap = {};
+                _.forEach(comp.selections, function (s) {
+                    selectionsMap[s.selection] = s;
+                }, selectionsMap);
 
                 Pick
                     .find({'competition': req.params.competitionId})
@@ -18,15 +23,11 @@ var tableRoutes = function (app, Competition, Pick) {
                     .exec()
                     .then(function (picks) {
 
-                        // can do better!
-                        var selectionsMap = {};
-                        _.forEach(comp.selections, function (s) {
-                            selectionsMap[s.selection] = s;
-                        }, selectionsMap);
-
                         picks = _.map(picks, function (p) {
+
                             p.selections = _.map(p.selections, function (s) {
-                                return selectionsMap[s.selection];
+                                //TODO do I need to convert?
+                                return selectionsMap[s.toString()];
                             });
 
                             p.total = _.reduce(p.selections, function (sum, s) {
@@ -37,7 +38,6 @@ var tableRoutes = function (app, Competition, Pick) {
                             delete p.__v;
 
                             return p;
-
                         });
 
                         // set table on comp

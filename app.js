@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 var express = require('express');
-var bodyParser = require('body-parser')
+var bodyParser = require('body-parser');
 
 var app = express();
 app.use(bodyParser.json());
@@ -36,18 +36,21 @@ var conn = mongoose.connection;
 var competitionModel = require(models_path + '/' + 'Competition.js');
 var pickModel = require(models_path + '/' + 'Pick.js');
 var userModel = require(models_path + '/' + 'User.js');
+var selectionModel = require(models_path + '/' + 'Selection.js');
 
 var competitionApi = require(api_path + '/' + 'Competition.js');
 var pickApi = require(api_path + '/' + 'Pick.js');
 var tableApi = require(api_path + '/' + 'Table.js');
 
-var competitionModel = competitionModel(mongoose);
-var pickModel = pickModel(mongoose);
-var userModel = userModel(mongoose);
+var userModelMongoose = userModel(mongoose);
+var selectionModelMongoose = selectionModel(mongoose);
+var competitionModelMongoose = competitionModel(mongoose);
+var pickModelMongoose = pickModel(mongoose);
 
-competitionApi(app, competitionModel);
-pickApi(app, pickModel);
-tableApi(app, competitionModel, pickModel);
+
+competitionApi(app, competitionModelMongoose);
+pickApi(app, pickModelMongoose);
+tableApi(app, competitionModelMongoose, pickModelMongoose);
 
 conn.on('error', console.error.bind(console, 'connection error:'));
 
