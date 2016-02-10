@@ -11,29 +11,33 @@ var tableRoutes = function (app, Competition, Pick) {
             .exec()
             .then(function (comp) {
 
+                // can do better!
+                var selectionsMap = {};
+                _.forEach(comp.selections, function (s) {
+                    selectionsMap[s.selection] = s;
+                }, selectionsMap);
+
                 Pick
                     .find({'competition': req.params.competitionId})
                     .lean()
                     .exec()
                     .then(function (picks) {
 
-                        // can do better!
-                        var selectionsMap = {};
-                        _.forEach(comp.selections, function (s) {
-                            selectionsMap[s.selection] = s;
-                        }, selectionsMap);
-
                         picks = _.map(picks, function (p) {
+
                             p.selections = _.map(p.selections, function (s) {
-                                return selectionsMap[s.selection];
+                                //TODO do I need to convert?
+                                return selectionsMap[s.toString()];
                             });
 
                             p.total = _.reduce(p.selections, function (sum, s) {
                                 return sum + (s.score || 0) + ((s.handicap || 0) * (s.multiplier || 1));
                             }, 0);
 
-                            return p;
+                            delete p._id;
+                            delete p.__v;
 
+                            return p;
                         });
 
                         // set table on comp
