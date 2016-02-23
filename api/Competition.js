@@ -1,6 +1,17 @@
 var competitionRoutes = function (app, Competition) {
 
-    var _ = require('lodash');
+    app.get('/competitions', function (req, res) {
+        console.log('GET /competitions');
+        Competition.find({})
+            .sort({status: 'descending', name: 'ascending'})
+            .exec()
+            .then(function (docs) {
+                res.send(docs);
+            }, function (error) {
+                console.log('Ooops: ' + error);
+                res.status(500).send('Ooops: Unable to retrieve data!');
+            });
+    });
 
     app.get('/competition/:competitionId', function (req, res) {
         console.log('GET /competition/' + req.params.competitionId);
@@ -15,6 +26,26 @@ var competitionRoutes = function (app, Competition) {
                 res.status(500).send('Ooops: Unable to retrieve data!');
             });
 
+    });
+
+    app.put('/competition/push/:competitionId', function (req, res) {
+        console.log('PUT /table/push/' + req.params.competitionId + ' BODY: ' + JSON.stringify(req.body));
+
+        Competition
+            .findOne(req.params.competitionId)
+            .update({'selections.selection': req.body.selectionId}, {
+                updated: Number((new Date().getTime() / 1000).toFixed(0)),
+                $set: {
+                    'selections.$.score': req.body.score
+                }
+            })
+            .exec()
+            .then(function (game) {
+                res.send(game);
+            }, function (error) {
+                console.log('Ooops: ' + error);
+                res.status(500).send('Ooops: Unable to retrieve data!');
+            });
     });
 };
 
