@@ -15,16 +15,6 @@ var gameRoutes = function (app, Game) {
             });
     });
 
-    app.get('/games/all', function (req, res) {
-        console.log('GET /games/all');
-        Game.find({})
-            .sort({name: 'ascending'})
-            .exec()
-            .then(function (docs) {
-                res.send(docs);
-            }, errorFunc);
-    });
-
     app.get('/game/:id', function (req, res) {
         console.log('GET /game/' + req.params.id);
         Game.findOne({
