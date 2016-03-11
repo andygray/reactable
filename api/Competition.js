@@ -53,11 +53,9 @@ var competitionRoutes = function (app, Competition) {
 
         Competition
             .findOne(req.params.competitionId)
-            .update({'selections.selection': req.body.selectionId}, {
+            .update({
                 updated: Number((new Date().getTime() / 1000).toFixed(0)),
-                $set: {
-                    'selections.$.score': req.body.score
-                }
+                status: req.body.status
             })
             .exec()
             .then(function (game) {
