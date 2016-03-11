@@ -29,7 +29,27 @@ var competitionRoutes = function (app, Competition) {
     });
 
     app.put('/competition/push/:competitionId', function (req, res) {
-        console.log('PUT /table/push/' + req.params.competitionId + ' BODY: ' + JSON.stringify(req.body));
+        console.log('PUT /competition/push/' + req.params.competitionId + ' BODY: ' + JSON.stringify(req.body));
+
+        Competition
+            .findOne(req.params.competitionId)
+            .update({'selections.selection': req.body.selectionId}, {
+                updated: Number((new Date().getTime() / 1000).toFixed(0)),
+                $set: {
+                    'selections.$.score': req.body.score
+                }
+            })
+            .exec()
+            .then(function (game) {
+                res.send(game);
+            }, function (error) {
+                console.log('Ooops: ' + error);
+                res.status(500).send('Ooops: Unable to retrieve data!');
+            });
+    });
+
+    app.put('/competition/status/:competitionId', function (req, res) {
+        console.log('PUT /competition/status/' + req.params.competitionId + ' BODY: ' + JSON.stringify(req.body));
 
         Competition
             .findOne(req.params.competitionId)
