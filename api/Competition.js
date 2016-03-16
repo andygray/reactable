@@ -6,7 +6,7 @@ var competitionRoutes = function (app, Competition) {
             .sort({status: 'descending', name: 'ascending'})
             .exec()
             .then(function (docs) {
-                res.send(docs);
+                res.header("Access-Control-Allow-Origin", "http://localhost:3000").send(docs);
             }, function (error) {
                 console.log('Ooops: ' + error);
                 res.status(500).send('Ooops: Unable to retrieve data!');
