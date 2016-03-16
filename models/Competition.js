@@ -20,7 +20,8 @@ var Competition = function (mongoose) {
             score: {type: Number, default: 0},
             handicap: {type: Number, default: 0},
             multiplier: {type: Number, default: 1},
-            potIndex: {type: Number, default: 0}
+            potIndex: {type: Number, default: 0},
+            _id: false
         }],
         start: {type: Number, default: 0},
         updated: {type: Number, default: 0}

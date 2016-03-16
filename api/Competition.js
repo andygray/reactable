@@ -28,8 +28,11 @@ var competitionRoutes = function (app, Competition) {
 
     });
 
-    app.put('/competition/push/:competitionId', function (req, res) {
-        console.log('PUT /competition/push/' + req.params.competitionId + ' BODY: ' + JSON.stringify(req.body));
+    app.put('/auth/competition/push/:competitionId', function (req, res) {
+        console.log('PUT /auth/competition/push/' + req.params.competitionId + ' BODY: ' + JSON.stringify(req.body));
+
+        //TODO check admin user
+        //TODO check payload
 
         Competition
             .findOne(req.params.competitionId)
@@ -40,11 +43,35 @@ var competitionRoutes = function (app, Competition) {
                 }
             })
             .exec()
-            .then(function (game) {
-                res.send(game);
+            .then(function (comp) {
+                res.send(comp);
             }, function (error) {
                 console.log('Ooops: ' + error);
                 res.status(500).send('Ooops: Unable to retrieve data!');
+            });
+    });
+
+    app.put('/auth/competition/selection/push/:competitionId', function (req, res) {
+        console.log('PUT /auth/competition/selection/push/' + req.params.competitionId + ' BODY: ' + JSON.stringify(req.body));
+
+        //TODO check admin user
+        if (!req.body || !req.body.selection) {
+            console.log('Ooops: ' + 'invalid data' + JSON.stringify(req.body));
+            res.status(500).send('Ooops: Unable to add selection data for competition:' + req.params.competitionId);
+        }
+
+        Competition
+            .findByIdAndUpdate(
+                req.params.competitionId,
+                {$push: {'selections': req.body}},
+                {safe: true, upsert: true, new : true}
+            )
+            .exec()
+            .then(function (comp) {
+                res.send(comp);
+            }, function (error) {
+                console.log('Ooops: ' + error);
+                res.status(500).send('Ooops: Unable to add selection data for competition:' + req.params.competitionId);
             });
     });
 
@@ -58,8 +85,8 @@ var competitionRoutes = function (app, Competition) {
                 status: req.body.status
             })
             .exec()
-            .then(function (game) {
-                res.send(game);
+            .then(function (comp) {
+                res.send(comp);
             }, function (error) {
                 console.log('Ooops: ' + error);
                 res.status(500).send('Ooops: Unable to retrieve data!');
