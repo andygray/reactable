@@ -55,6 +55,7 @@ var competitionApi = require(api_path + '/' + 'Competition.js');
 var pickApi = require(api_path + '/' + 'Pick.js');
 var tableApi = require(api_path + '/' + 'Table.js');
 var selectionApi = require(api_path + '/' + 'Selection.js');
+var userApi = require(api_path + '/' + 'User.js');
 
 var competitionModelMongoose = competitionModel(mongoose);
 var gameModelMongoose = gameModel(mongoose);
@@ -66,6 +67,7 @@ gameApi(app, gameModelMongoose);
 competitionApi(app, competitionModelMongoose);
 pickApi(app, pickModelMongoose);
 selectionApi(app, selectionModelMongoose);
+userApi(app, userModelMongoose);
 tableApi(app, competitionModelMongoose, pickModelMongoose);
 
 conn.on('error', console.error.bind(console, 'connection error:'));
