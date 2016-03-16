@@ -58,6 +58,7 @@ var competitionRoutes = function (app, Competition) {
         if (!req.body || !req.body.selection) {
             console.log('Ooops: ' + 'invalid data' + JSON.stringify(req.body));
             res.status(500).send('Ooops: Unable to add selection data for competition:' + req.params.competitionId);
+            return;
         }
 
         Competition
@@ -71,7 +72,31 @@ var competitionRoutes = function (app, Competition) {
                 res.send(comp);
             }, function (error) {
                 console.log('Ooops: ' + error);
-                res.status(500).send('Ooops: Unable to add selection data for competition:' + req.params.competitionId);
+                res.status(500).send('Ooops: Unable to add selection data for competition: ' + req.params.competitionId);
+            });
+    });
+
+    app.put('/auth/competition/selection/pull/:competitionId', function (req, res) {
+        console.log('PUT /auth/competition/selection/pull/' + req.params.competitionId + ' BODY: ' + JSON.stringify(req.body));
+
+        //TODO check admin user
+        if (!req.body || !req.body.selection) {
+            console.log('Ooops: ' + 'invalid data' + JSON.stringify(req.body));
+            res.status(500).send('Ooops: Unable to remove selection data for competition:' + req.params.competitionId);
+        }
+
+        Competition
+            .findByIdAndUpdate(
+            req.params.competitionId,
+            {$pull: {'selections': req.body}},
+            {safe: true, upsert: true, new : true}
+        )
+            .exec()
+            .then(function (comp) {
+                res.send(comp);
+            }, function (error) {
+                console.log('Ooops: ' + error);
+                res.status(500).send('Ooops: Unable to remove selection data for competition: ' + req.params.competitionId);
             });
     });
 
