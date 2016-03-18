@@ -63,10 +63,10 @@ var competitionRoutes = function (app, Competition) {
 
         Competition
             .findByIdAndUpdate(
-                req.params.competitionId,
-                {$push: {'selections': req.body}},
-                {safe: true, upsert: true, new : true}
-            )
+            req.params.competitionId,
+            {$push: {'selections': req.body}},
+            {safe: true, upsert: true, new: true}
+        )
             .exec()
             .then(function (comp) {
                 res.send(comp);
@@ -89,7 +89,7 @@ var competitionRoutes = function (app, Competition) {
             .findByIdAndUpdate(
             req.params.competitionId,
             {$pull: {'selections': req.body}},
-            {safe: true, upsert: true, new : true}
+            {safe: true, upsert: true, new: true}
         )
             .exec()
             .then(function (comp) {
@@ -104,8 +104,7 @@ var competitionRoutes = function (app, Competition) {
         console.log('PUT /competition/status/' + req.params.competitionId + ' BODY: ' + JSON.stringify(req.body));
 
         Competition
-            .findOne(req.params.competitionId)
-            .update({
+            .findByIdAndUpdate(req.params.competitionId, {
                 updated: Number((new Date().getTime() / 1000).toFixed(0)),
                 status: req.body.status
             })
