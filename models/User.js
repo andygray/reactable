@@ -13,6 +13,7 @@ var User = function (mongoose) {
         favs: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}]
     });
 
+
     return mongoose.model('User', userSchema);
 };
 
