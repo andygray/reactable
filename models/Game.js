@@ -3,7 +3,7 @@ var Game = function (mongoose) {
     // type: ascending or descending
     var gameSchema = new mongoose.Schema({
         name: String,
-        shortName: String,
+        shortName: {type: String, unique: true},
         parent: {
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Brand'

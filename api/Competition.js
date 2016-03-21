@@ -28,6 +28,21 @@ var competitionRoutes = function (app, Competition) {
 
     });
 
+    app.post('/auth/competition', function (req, res) {
+        console.log('POST /admin/create/competition');
+
+        //TODO check admin user
+        //TODO check payload
+
+        Competition.create(req.body, function (err, competition) {
+            if (err) {
+                res.send(err);
+            } else {
+                res.send(competition);
+            }
+        });
+    });
+
     app.put('/auth/competition/push/:competitionId', function (req, res) {
         console.log('PUT /auth/competition/push/' + req.params.competitionId + ' BODY: ' + JSON.stringify(req.body));
 

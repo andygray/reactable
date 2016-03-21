@@ -9,7 +9,7 @@ var Competition = function (mongoose) {
         description: String,
         image: {type: String, default: ""},
         order: {type: Boolean, default: true},
-        shortName: String,
+        shortName: {type: String, unique: true},
         status: {type: String, default: "open"},
         selections: [{
             selection: {
