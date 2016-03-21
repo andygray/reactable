@@ -12,16 +12,15 @@ var Competition = function (mongoose) {
         shortName: {type: String, unique: true},
         status: {type: String, default: "open"},
         selections: [{
-            selection: {
+            _id: {
                 type: mongoose.Schema.Types.ObjectId,
                 ref: 'Selection'
             },
-            selectionName: {type: String, default: ''},
+            name: {type: String, default: ''},
             score: {type: Number, default: 0},
             handicap: {type: Number, default: 0},
             multiplier: {type: Number, default: 1},
-            potIndex: {type: Number, default: 0},
-            _id: false
+            potIndex: {type: Number, default: 0}
         }],
         start: {type: Number, default: 0},
         updated: {type: Number, default: 0}
