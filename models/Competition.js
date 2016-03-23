@@ -22,6 +22,7 @@ var Competition = function (mongoose) {
             multiplier: {type: Number, default: 1},
             potIndex: {type: Number, default: 0}
         }],
+        pots: [String],
         start: {type: Number, default: 0},
         updated: {type: Number, default: 0}
     });
