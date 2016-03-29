@@ -28,6 +28,23 @@ var competitionRoutes = function (app, Competition) {
 
     });
 
+    app.delete('/competition/:competitionId', function (req, res) {
+        console.log('DELETE /competition/' + req.params.competitionId);
+
+        //TODO check admin user
+
+        Competition
+            .find({'_id': req.params.competitionId})
+            .remove()
+            .exec()
+            .then(function () {
+                res.send({'_id': req.params.competitionId});
+            }, function (error) {
+                console.log('Ooops: ' + error);
+                res.status(500).send('Ooops: Unable to retrieve data!');
+            });
+    });
+
     app.post('/auth/competition', function (req, res) {
         console.log('POST /admin/create/competition');
 
@@ -36,7 +53,7 @@ var competitionRoutes = function (app, Competition) {
 
         Competition.create(req.body, function (err, competition) {
             if (err) {
-                res.send(err);
+                res.status(500).send(err); // TODO handle validation/schema errors vs app errors?
             } else {
                 res.send(competition);
             }
