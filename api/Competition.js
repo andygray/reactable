@@ -37,8 +37,8 @@ var competitionRoutes = function (app, Competition) {
             .find({'_id': req.params.competitionId})
             .remove()
             .exec()
-            .then(function (comp) {
-                res.send(comp);
+            .then(function () {
+                res.send({'_id': req.params.competitionId});
             }, function (error) {
                 console.log('Ooops: ' + error);
                 res.status(500).send('Ooops: Unable to retrieve data!');
